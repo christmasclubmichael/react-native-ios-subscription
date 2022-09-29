@@ -9,6 +9,28 @@
 }
 RCT_EXPORT_MODULE()
 
+RCT_EXPORT_METHOD(hasPurchasedSubscriptionForProductID:(NSString*)productID :(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    if(productID == nil) {
+        resolve(@{@"status": @"error", @"message": @"Please provide the productID whose subscription status needs to be checked."});
+    }
+
+    RMStoreKeychainPersistence *_persistor = [[RMStoreKeychainPersistence alloc] init];
+    [RMStore defaultStore].transactionPersistor = _persistor;
+        
+    [[RMStore defaultStore] refreshReceiptOnSuccess:^{
+        RMStoreAppReceiptVerifier *verificator = [RMStoreAppReceiptVerifier new];
+        if ([verificator verifyAppReceipt])
+        {
+            BOOL hasPurchased = [[RMAppReceipt bundleReceipt] containsInAppPurchaseOfProductIdentifier:productID];
+            
+            NSString *hasPurchase = (hasPurchased) ? @"YES" : @"NO";
+            NSLog(@"has_purchase: %@", hasPurchase);
+            resolve(@{@"status": @"success", @"has_purchase": hasPurchase});
+        }
+    } failure:^(NSError *error) {
+       resolve(@{@"status": @"error", @"message": [error localizedDescription]});
+    }];
+}
 
 RCT_EXPORT_METHOD(isSubscribedForProductID:(NSString*)productID :(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     if(productID == nil) {

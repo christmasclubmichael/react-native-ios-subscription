@@ -12,7 +12,7 @@
 #import "RMAppReceipt.h"
 #import "RMStoreAppReceiptVerifier.h"
 
-@interface RNNativeSubscription : RCTEventEmitter <RCTBridgeModule>
+@interface RNNativeSubscription : NSObject <RCTBridgeModule>
 
 @end
   
