@@ -24,8 +24,9 @@ RCT_EXPORT_METHOD(isSubscribedForProductID:(NSString*)productID :(RCTPromiseReso
         {
             BOOL isSubscribed = [[RMAppReceipt bundleReceipt] containsActiveAutoRenewableSubscriptionOfProductIdentifier:productID forDate: [NSDate date]];
             
-            NSLog(@"is_subscribed: %@", (isSubscribed) ? @"YES" : @"NO");
-            resolve(@{@"status": @"success", "is_subscribed": isSubscribed});
+            NSString *subscribed = (isSubscribed) ? @"YES" : @"NO";
+            NSLog(@"is_subscribed: %@", subscribed);
+            resolve(@{@"status": @"success", @"is_subscribed": subscribed});
         }
     } failure:^(NSError *error) {
        resolve(@{@"status": @"error", @"message": [error localizedDescription]});
