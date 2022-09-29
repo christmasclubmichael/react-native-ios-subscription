@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.author       = { "Mahendra Liya" => "liyamahendra4@gmail.com" }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/devapps-systems/react-native-ios-subscription.git", :tag => "master" }
-  s.source_files  = "RNNativeSubscription/**/*.{h,m}"
+  s.source_files  = "ios/**/*.{h,m}"
   s.requires_arc = true
 
 
