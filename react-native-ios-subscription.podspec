@@ -19,10 +19,9 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/**/*.{h,m}"
   s.requires_arc = true
 
-  s.ios.vendored_library = 'ios/OpenSSL/lib/libcrypto.a'
-  s.ios.vendored_library = 'ios/OpenSSL/lib/libssl.a'
 
   s.dependency "React"
+  s.dependency "OpenSSL-Universal"
 
 end
 
