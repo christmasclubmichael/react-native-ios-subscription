@@ -24,7 +24,40 @@ React native module for checking subscription status
 ```javascript
 import RNNativeSubscription from 'react-native-native-subscription';
 
-// TODO: What to do with the module?
-RNNativeSubscription;
+RNNativeSubscription.hasPurchasedSubscriptionForProductID(
+  productID,
+).then((hasPurchaseResponse: any) => {
+  console.log('hasPurchaseResponse: ', hasPurchaseResponse);
+  if (hasPurchaseResponse['status'] == 'success') {
+    let hasPurchase =
+      hasPurchaseResponse['has_purchase'] == 'YES' ? true : false;
+
+    if (hasPurchase) {
+      RNNativeSubscription.isSubscribedForProductID(productID).then(
+        (subscriptionResponse: any) => {
+          console.log('subscriptionResponse: ', subscriptionResponse);
+          if (subscriptionResponse['status'] == 'success') {
+            let isSubscribed =
+              subscriptionResponse['is_subscribed'] == 'YES'
+                ? true
+                : false;
+            console.log('isSubscribed: ', isSubscribed);
+
+            if (isSubscribed) {
+              // execute code for subscribed user
+            } else {
+              // execute code to show user subscription plan 
+              // The user was subscribed earlier, but the plan got expired/not renewed
+            }
+          } else {
+            console.log("Failed to check subscriptions status: ", subscriptionResponse['message'])
+          }
+        },
+      );
+    }
+  } else {
+    // The user has never subscribed. Show the subscription plans
+  }
+})
 ```
   
